@@ -2,20 +2,40 @@
 
 enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+class Usuario(val nome: String, val email: String) {
+    // Adicione propriedades e métodos relevantes para um usuário, como histórico de formações, etc.
+}
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+data class ConteudoEducacional(val nome: String, val duracao: Int, val nivel: Nivel)
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
-
+data class Formacao(val nome: String, var conteudos: MutableList<ConteudoEducacional> = mutableListOf()) {
     val inscritos = mutableListOf<Usuario>()
-    
+
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add(usuario)
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    // Crie alguns usuários
+    val usuario1 = Usuario("João", "joao@email.com")
+    val usuario2 = Usuario("Maria", "maria@email.com")
+
+    // Crie alguns conteúdos educacionais
+    val conteudo1 = ConteudoEducacional("Introdução ao Kotlin", 60, Nivel.BASICO)
+    val conteudo2 = ConteudoEducacional("Programação Orientada a Objetos", 90, Nivel.INTERMEDIARIO)
+
+    // Crie uma formação e matricule usuários nela
+    val formacao = Formacao("Desenvolvimento Kotlin")
+    formacao.matricular(usuario1)
+    formacao.matricular(usuario2)
+
+    // Adicione conteúdos à formação
+    formacao.conteudos.add(conteudo1)
+    formacao.conteudos.add(conteudo2)
+
+    // Imprima informações ou faça outras operações conforme necessário
+    println("Formação: ${formacao.nome}")
+    println("Inscritos: ${formacao.inscritos}")
+    println("Conteúdos: ${formacao.conteudos}")
 }
